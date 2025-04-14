@@ -187,8 +187,12 @@ async def main():
     await enviar_testes_iniciais()
     await app.initialize()
     await app.start()
-    await app.updater.start_polling()
-    print("✅ Bot rodando localmente...")
+    
+    # 🚀 Configurar Webhook em vez de Polling
+    webhook_url = "https://bottdah.onrender.com/webhook"
+    await app.bot.set_webhook(webhook_url)
+
+    print("✅ Bot rodando com Webhooks na Render!")
 
     await asyncio.Event().wait()
 
