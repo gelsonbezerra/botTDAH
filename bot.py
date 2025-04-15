@@ -4,14 +4,16 @@ import datetime
 import asyncio
 import json
 import random
+import pytz  # Adicionando suporte para fuso horário
 from flask import Flask
 from telegram import Bot, InputFile
 from telegram.ext import ApplicationBuilder
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-# 🕒 Verificando o horário do servidor na Render
-agora = datetime.datetime.now()
-print(f"🕒 Horário do servidor: {agora}")
+# 🕒 Ajustando o horário para Brasil (São Paulo)
+fuso_brasil = pytz.timezone("America/Sao_Paulo")
+agora = datetime.datetime.now(fuso_brasil)
+print(f"🕒 Horário ajustado para Brasil: {agora}")
 
 BOT_TOKEN = "7922581689:AAH8Z7jxKueWm7VGVOjgUhUgUpqsp2s10ro"
 GROUP_ID = -1002655972228
@@ -49,8 +51,7 @@ TOPICOS = {
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
-        "horarios": ["23:10", "23:14"],
-        #"teste": "testemtv.pdf"
+        "horarios": ["09:00", "19:00"],
     }
 }
 
@@ -59,8 +60,8 @@ with open("mensagens.json", "r", encoding="utf-8") as f:
 
 async def rotina_postagem():
     bot = Bot(BOT_TOKEN)
-    agora = datetime.datetime.now().strftime("%H:%M")
-    hoje = datetime.datetime.now().strftime("%A").lower()
+    agora = datetime.datetime.now(fuso_brasil).strftime("%H:%M")
+    hoje = datetime.datetime.now(fuso_brasil).strftime("%A").lower()
 
     for topico, config in TOPICOS.items():
         if config.get("ativo") and config.get("frequencia") == "diario" and agora in config["horarios"]:
