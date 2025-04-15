@@ -4,7 +4,7 @@ import datetime
 import asyncio
 import json
 import random
-import pytz  # Adicionando suporte para fuso horário
+import pytz  # Suporte para fuso horário
 from flask import Flask
 from telegram import Bot, InputFile
 from telegram.ext import ApplicationBuilder
@@ -51,7 +51,7 @@ TOPICOS = {
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
-        "horarios": ["23:40", "21:59"],
+        "horarios": ["23:52", "21:59"],
     }
 }
 
@@ -59,12 +59,16 @@ with open("mensagens.json", "r", encoding="utf-8") as f:
     MENSAGENS = json.load(f)
 
 async def rotina_postagem():
+    print("🚀 Entrando na rotina de postagem!")
     bot = Bot(BOT_TOKEN)
     agora = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil).strftime("%H:%M")
     hoje = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil).strftime("%A").lower()
 
+    print(f"🕒 Horário atual: {agora} | Dia: {hoje}")
+
     for topico, config in TOPICOS.items():
         if config.get("ativo") and config.get("frequencia") == "diario" and agora in config["horarios"]:
+            print(f"📌 Postando no tópico {topico}...")
             await bot.send_message(chat_id=GROUP_ID, message_thread_id=config["id_topico"], text="📌 Conteúdo VIP chegando!")
             await asyncio.sleep(5)
 
@@ -76,9 +80,12 @@ async def enviar_testes_iniciais():
             await asyncio.sleep(5)
 
 async def start_bot():
+    print("🚀 Iniciando bot...")
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(rotina_postagem, "cron", minute="*/1")
+    
+    # Modificação: usar 'interval' para garantir execução
+    scheduler.add_job(rotina_postagem, "interval", minutes=1)
     scheduler.start()
 
     await enviar_testes_iniciais()
@@ -86,6 +93,7 @@ async def start_bot():
     await app.start()
 
     webhook_url = "https://bottdah.onrender.com/webhook"
+    print(f"🌐 Configurando Webhook: {webhook_url}")
     await app.bot.set_webhook(webhook_url)
 
     print("✅ Bot rodando com Webhooks na Render!")
