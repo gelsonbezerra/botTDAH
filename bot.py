@@ -50,7 +50,7 @@ TOPICOS = {
         "padrao_nome": "mtv",
         "frequencia": "diario",
 <<<<<<< HEAD
-        "horarios": ["22:26", "22:30"],
+        "horarios": ["22:56", "22:58"],
         #"teste": "testemtv.pdf"
 =======
         "horarios": ["21:57", "21:59"],
