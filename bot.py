@@ -27,31 +27,13 @@ TOPICOS = {
         "frequencia": "diario",
         "horarios": ["09:00"],
     },
-    "dicaspraticas": {
-        "ativo": True,
-        "id_topico": 8,
-        "pasta": "dicaspraticas",
-        "padrao_nome": "dp",
-        "frequencia": "semanal",
-        "dias": ["terça", "quinta"],
-        "horarios": ["10:00"],
-    },
-    "insights": {
-        "ativo": True,
-        "id_topico": 169,
-        "pasta": "insights",
-        "padrao_nome": "in",
-        "frequencia": "semanal",
-        "dias": ["terça", "sexta"],
-        "horarios": ["10:30"],
-    },
     "motivacional": {
         "ativo": True,
         "id_topico": 4,
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
-        "horarios": ["23:52", "21:59"],
+        "horarios": ["23:59", "21:59"],
     }
 }
 
@@ -62,9 +44,8 @@ async def rotina_postagem():
     print("🚀 Entrando na rotina de postagem!")
     bot = Bot(BOT_TOKEN)
     agora = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil).strftime("%H:%M")
-    hoje = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil).strftime("%A").lower()
-
-    print(f"🕒 Horário atual: {agora} | Dia: {hoje}")
+    
+    print(f"🕒 Horário atual: {agora}")
 
     for topico, config in TOPICOS.items():
         if config.get("ativo") and config.get("frequencia") == "diario" and agora in config["horarios"]:
@@ -72,23 +53,15 @@ async def rotina_postagem():
             await bot.send_message(chat_id=GROUP_ID, message_thread_id=config["id_topico"], text="📌 Conteúdo VIP chegando!")
             await asyncio.sleep(5)
 
-async def enviar_testes_iniciais():
-    bot = Bot(BOT_TOKEN)
-    for topico, config in TOPICOS.items():
-        if config.get("ativo") and config.get("teste"):
-            await bot.send_message(chat_id=GROUP_ID, message_thread_id=config["id_topico"], text="📌 Testando funcionamento!")
-            await asyncio.sleep(5)
-
 async def start_bot():
     print("🚀 Iniciando bot...")
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     scheduler = AsyncIOScheduler()
-    
-    # Modificação: usar 'interval' para garantir execução
-    scheduler.add_job(rotina_postagem, "interval", minutes=1)
+
+    # 🔄 Modificação: rodando a cada 30 segundos para testar agendamento
+    scheduler.add_job(rotina_postagem, "cron", second="*/30")
     scheduler.start()
 
-    await enviar_testes_iniciais()
     await app.initialize()
     await app.start()
 
