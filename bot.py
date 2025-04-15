@@ -19,7 +19,7 @@ TOPICOS = {
         "padrao_nome": "dd",
         "frequencia": "diario",
         "horarios": ["09:00"],
-        "teste": "testedd.pdf"
+       # "teste": "testedd.pdf"
     },
     "dicaspraticas": {
         "ativo": True,
@@ -29,7 +29,7 @@ TOPICOS = {
         "frequencia": "semanal",
         "dias": ["terça", "quinta"],
         "horarios": ["10:00"],
-        "teste": "testedp.pdf"
+       # "teste": "testedp.pdf"
     },
     "insights": {
         "ativo": True,
@@ -39,7 +39,7 @@ TOPICOS = {
         "frequencia": "semanal",
         "dias": ["terça", "sexta"],
         "horarios": ["10:30"],
-        "teste": "testein.pdf"
+        #"teste": "testein.pdf"
     },
     "motivacional": {
         "ativo": True,
@@ -48,7 +48,7 @@ TOPICOS = {
         "padrao_nome": "mtv",
         "frequencia": "diario",
         "horarios": ["08:00", "19:00"],
-        "teste": "testemtv.pdf"
+        #"teste": "testemtv.pdf"
     }
 }
 
