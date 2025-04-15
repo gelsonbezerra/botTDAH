@@ -49,12 +49,8 @@ TOPICOS = {
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
-<<<<<<< HEAD
-        "horarios": ["22:56", "22:58"],
+        "horarios": ["23:10", "23:14"],
         #"teste": "testemtv.pdf"
-=======
-        "horarios": ["21:57", "21:59"],
->>>>>>> 5f56b89 (Adicionando verificação do horário do servidor)
     }
 }
 
