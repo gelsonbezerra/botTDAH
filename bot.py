@@ -47,7 +47,7 @@ TOPICOS = {
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
-        "horarios": ["08:00", "19:00"],
+        "horarios": ["21:57", "21:59"],
         #"teste": "testemtv.pdf"
     }
 }
