@@ -10,9 +10,9 @@ from telegram import Bot, InputFile
 from telegram.ext import ApplicationBuilder
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-# 🕒 Ajustando o horário para Brasil (São Paulo)
+# 🕒 Ajustando corretamente para o fuso horário do Brasil
 fuso_brasil = pytz.timezone("America/Sao_Paulo")
-agora = datetime.datetime.now(fuso_brasil)
+agora = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil)
 print(f"🕒 Horário ajustado para Brasil: {agora}")
 
 BOT_TOKEN = "7922581689:AAH8Z7jxKueWm7VGVOjgUhUgUpqsp2s10ro"
@@ -51,7 +51,7 @@ TOPICOS = {
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
-        "horarios": ["09:00", "19:00"],
+        "horarios": ["21:57", "21:59"],
     }
 }
 
@@ -60,8 +60,8 @@ with open("mensagens.json", "r", encoding="utf-8") as f:
 
 async def rotina_postagem():
     bot = Bot(BOT_TOKEN)
-    agora = datetime.datetime.now(fuso_brasil).strftime("%H:%M")
-    hoje = datetime.datetime.now(fuso_brasil).strftime("%A").lower()
+    agora = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil).strftime("%H:%M")
+    hoje = datetime.datetime.now(datetime.timezone.utc).astimezone(fuso_brasil).strftime("%A").lower()
 
     for topico, config in TOPICOS.items():
         if config.get("ativo") and config.get("frequencia") == "diario" and agora in config["horarios"]:
