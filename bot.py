@@ -9,6 +9,10 @@ from telegram import Bot, InputFile
 from telegram.ext import ApplicationBuilder
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+# 🕒 Verificando o horário do servidor na Render
+agora = datetime.datetime.now()
+print(f"🕒 Horário do servidor: {agora}")
+
 BOT_TOKEN = "7922581689:AAH8Z7jxKueWm7VGVOjgUhUgUpqsp2s10ro"
 GROUP_ID = -1002655972228
 
@@ -20,7 +24,6 @@ TOPICOS = {
         "padrao_nome": "dd",
         "frequencia": "diario",
         "horarios": ["09:00"],
-       # "teste": "testedd.pdf"
     },
     "dicaspraticas": {
         "ativo": True,
@@ -30,7 +33,6 @@ TOPICOS = {
         "frequencia": "semanal",
         "dias": ["terça", "quinta"],
         "horarios": ["10:00"],
-       # "teste": "testedp.pdf"
     },
     "insights": {
         "ativo": True,
@@ -40,7 +42,6 @@ TOPICOS = {
         "frequencia": "semanal",
         "dias": ["terça", "sexta"],
         "horarios": ["10:30"],
-        #"teste": "testein.pdf"
     },
     "motivacional": {
         "ativo": True,
@@ -48,8 +49,12 @@ TOPICOS = {
         "pasta": "motivacional",
         "padrao_nome": "mtv",
         "frequencia": "diario",
+<<<<<<< HEAD
         "horarios": ["22:26", "22:30"],
         #"teste": "testemtv.pdf"
+=======
+        "horarios": ["21:57", "21:59"],
+>>>>>>> 5f56b89 (Adicionando verificação do horário do servidor)
     }
 }
 
